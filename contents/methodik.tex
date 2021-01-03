@@ -1,6 +1,14 @@
 \chapter{Methodik}
 
-\blindtext
+In diesem Kapitel wird ein Verfahren zur Erzeugung eines Feature Vectors für Bilder vorgestellt. Ziel des Prozesses ist es, Eigenschaften aus Gemälden zu extrahieren, welche brauchbare Informationen über den Stiel des Kunstwerkes liefern. Zu diesem Zweck werden Algorithmen aus dem Bereich des Visual Computing in einer Pipeline hintereinander ausgeführt.
+
+Zu Beginn der Pipeline wird das vorliegende Bild in den "Lab Farbraum" konvertiert. Jeder der drei resultierenden Kanäle wird für sich den folgenden Schritten unterzogen um zum Schluss zu einem gemeinsamen Vektor wiedervereinigt zu werden.
+
+Durch mehrere aufeinander folgende "Difference of Gaussians"-Filter wird für jeden Kanal ein "Scale Space" über die Frequenzbänder erzeugt. Das Ergebnis sind mehrere Bilder, welche nur noch die Frequenzen eines bestimmten Spektrums beinhalten.
+
+Zu jedem der Resultierenden Bilder des "Scale Space" werden mehrere Ausschnitte zu einer Pyramide gebildet, über welche jeweils ein "Histogram of Oriented Gradients"  (HoG) erzeugt wird. 
+
+Die Resultate der HoGs sind Vektoren welche zu einem Gesamtvektor zusammengesetzt werden.
 
 \section{JenAestetics Datenbank}
 
@@ -8,7 +16,7 @@
 
 \section{Lab Farbraum}
 
-\blindtext
+Der Lab Farbraum bildet Farben in drei Dimensionen ab: Die Luminanz Achse (L) nimmt Werte von 0 bis 100 an und stellt die Helligkeit einer Farbe dar, während die Achsen a und b den Farbanteil von Rot-Grün bzw. Blau-Gelb repräsentieren und Werte von -128 bis 127 annehmen.
 
 \subsection{Definition}
 
@@ -20,7 +28,13 @@
 
 \subsection{Vorteile}
 
-\blindtext
+Der Lab Farbraum bietet für die in dieser Arbeit anstehenden Untersuchungen mehrere Vorteile:
+
+\begin{description}
+	\item[Schwarz Weiß Bild enthalten]{Da der L-Kanal eines Bildes im Lab Farbraum nur die Helligkeitsinformationen beinhaltet steht hier im gegensatz zum RGB Farbraum bereits eine Schwarz Weiß Version des Bildes zu Verfügung.}
+	\item[Statistische Unabhängigkeit]{Die Kanäle des Lab Farbraum sind statistisch unabhängig voneinander und können daher getrennt behandelt werden.}
+	\item[Wahrnehmungsgetreu]{Der Abstand zweier Farben im Lab Farbraum korreliert linear mit dem Empfundenen Farbunterschied.}
+\end{description}
 
 \section{Scale Space}
 
