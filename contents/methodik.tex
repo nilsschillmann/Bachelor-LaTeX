@@ -2,39 +2,60 @@
 
 In diesem Kapitel wird ein Verfahren zur Erzeugung eines Feature Vectors für Bilder vorgestellt. Ziel des Prozesses ist es, Eigenschaften aus Gemälden zu extrahieren, welche brauchbare Informationen über den Stiel des Kunstwerkes liefern. Zu diesem Zweck werden Algorithmen aus dem Bereich des Visual Computing in einer Pipeline hintereinander ausgeführt.
 
-Zu Beginn der Pipeline wird das vorliegende Bild in den "Lab Farbraum" konvertiert. Jeder der drei resultierenden Kanäle wird für sich den folgenden Schritten unterzogen um zum Schluss zu einem gemeinsamen Vektor wiedervereinigt zu werden.
+Zu Beginn der Pipeline wird das vorliegende Bild in den Lab Farbraum konvertiert. Jeder der drei resultierenden Kanäle wird für sich den folgenden Schritten unterzogen um zum Schluss zu einem gemeinsamen Vektor wiedervereinigt zu werden.
 
-Durch mehrere aufeinander folgende "Difference of Gaussians"-Filter wird für jeden Kanal ein "Scale Space" über die Frequenzbänder erzeugt. Das Ergebnis sind mehrere Bilder, welche nur noch die Frequenzen eines bestimmten Spektrums beinhalten.
+Durch mehrere aufeinander folgende Difference of Gaussians Filter wird für jeden Kanal ein Scale Space über die Frequenzbänder erzeugt. Das Ergebnis sind mehrere Bilder, welche nur noch die Frequenzen eines bestimmten Spektrums beinhalten.
 
-Zu jedem der Resultierenden Bilder des "Scale Space" werden mehrere Ausschnitte zu einer Pyramide gebildet, über welche jeweils ein "Histogram of Oriented Gradients"  (HoG) erzeugt wird. 
+Zu jedem der Resultierenden Bilder des Scale Space werden mehrere Ausschnitte zu einer Pyramide gebildet, über welche jeweils ein \ac{HoG} erzeugt wird. 
 
-Die Resultate der HoGs sind Vektoren welche zu einem Gesamtvektor zusammengesetzt werden.
+Die Resultate der \ac{HoG}s sind Vektoren welche zu einem Gesamtvektor zusammengesetzt werden.
 
 \section{JenAestetics Datenbank}
 
 \blindtext
 
-\section{Lab Farbraum}
+\section{Farbräume}
 
-Der Lab Farbraum bildet Farben in drei Dimensionen ab: Die Luminanz Achse (L) nimmt Werte von 0 bis 100 an und stellt die Helligkeit einer Farbe dar, während die Achsen a und b den Farbanteil von Rot-Grün bzw. Blau-Gelb repräsentieren und Werte von -128 bis 127 annehmen.
+Ein Bild wird digital meist als eine Matrix von Pixeln dargestellt. Jeder Pixel steht dabei für eine Farbe oder einen Grauwert an einer durch die Matrix bestimmten Position des Bildes. Die Farbe jedes Pixels wird dabei über einen Punkt in einem Farbraum definiert.
+Eine einfache Lösung um ein Bild in Grauwerten bzw. Schwarz Weiß zu codieren ist es, jedem Pixel eine Zahl zwischen 0 und 100 zuzuordnen, wobei 0 für Schwarz, 100 für Weiß und alle dazwischen liegenden Zahlen für die entsprechenden Grauwerte stehen.
+Es wurden für unterschiedliche Einsatzzwecke Farbräume mit mehr Dimensionen entwickelt, wobei oft ein Mischverhältnis von Grundfarben codiert wird. So stellt der CMYK Farbraum das Mischverhältnis der namensgebenden Grundfarben Cyan, Magenta, Gelb (Yellow) und Schwarz (Key) dar, die von Druckern für die subtraktive Farbmischung verwendet werden.
+Der RGB Farbraum codiert die Farben Rot, Grün und Blau die von Monitoren für die additive Farbmischung genutzt werden.
 
-\subsection{Definition}
+\subsection{RGB Farbraum}
 
-\blindtext
+Licht ist ein Bereich des Elektro-Magnetischen Wellenspektrums der von Menschen und Tieren wahrgenommen werden kann. Die Monochromatischen (einfarbigen) Farben des Regenbogens bestehen aus Licht jeweils einer bestimmten Wellenlänge zwischen 380 und 750 nm. Das menschliche Auge besitzt für das Farbsehen drei Arten von Rezeptoren, Zapfen genannt, welche jeweils für einen Frequenzbereich um eine der Grundfarben Blau, Grün und Rot empfindlich sind. Fällt zur gleichen Zeit grünes Licht mit einer Wellenlänge von ca. 500 nm und Rotes Licht mit 700 nm auf das Auge, entsteht der selbe Eindruck wie beim Wahrnehmen von gelbem Licht, mit einer Wellenlänge von 580 nm, da in beiden Fällen die Rezeptoren für Grün und Rot gleichstark gereizt werden. Auf diese Weise ist es Monitoren möglich, für jedes Pixel nur Leuchtmittel in den drei Grundfarben bereitzustellen und dennoch einen großen Bereich der vom Menschen wahrnehmbaren Farbeindrücke zu erzeugen. Aus diesem Grund werden Bilder für die digitale Speicherung und Übertragung oft mit Hilfe eines RGB Farbraums codiert. Jede Dimension dieses Raums steht dabei für eine der Grundfarben, sodass ein Punkt das Mischverhältnis und damit eine beliebige Farbe darstellt. Dabei stehen die Maximalwerte, je nachdem mit welcher Bittiefe codiert wird, für die reine Grundfarbe. Ein reines Rot wird bei einer Bittiefe von 8 bit durch den Vektor $\left(255, 0, 0\right)$ repräsentiert, während ein reines Gelb den Vektor $ \left(255, 255, 0\right) $ erhält. Unterschiedliche Helligkeiten werden durch das gleichmäßige anheben oder absenken aller Grundfarben erzeugt. So ist Schwarz durch den Koordinatenursprung $ \left(0, 0, 0\right) $ und Weiß durch die Maximalwerte $ \left(255, 255, 255\right) $ definiert.
 
-\subsection{Verbindung zum menschlichen Sehen}
 
-\blindtext
+\subsection{Lab Farbraum}
 
-\subsection{Vorteile}
 
-Der Lab Farbraum bietet für die in dieser Arbeit anstehenden Untersuchungen mehrere Vorteile:
+
+Die Bilder der JenAesthetics Datenbank liegen im JPEG Format vor, welches Farben im RGB Raum codiert. Zu beginn der Pipeline werden die Bilder in den Lab Farbraum überführt.
+
+
+\theoremstyle{definition}
+\begin{definition}[Lab Farbraum]
+	Der Lab Farbraum bildet Farben in drei Dimensionen ab: Die Luminanz Achse (L) nimmt Werte von 0 bis 100 an und stellt die Helligkeit einer Farbe dar, während die Achsen a und b den Farbanteil von Rot zu Grün bzw. von Blau zu Gelb repräsentieren und Werte von -128 bis 127 annehmen.
+\end{definition}
+
+Das Arbeiten in diesem Farbraum bietet sich aus mehreren Gründen an:
 
 \begin{description}
-	\item[Schwarz Weiß Bild enthalten]{Da der L-Kanal eines Bildes im Lab Farbraum nur die Helligkeitsinformationen beinhaltet steht hier im gegensatz zum RGB Farbraum bereits eine Schwarz Weiß Version des Bildes zu Verfügung.}
-	\item[Statistische Unabhängigkeit]{Die Kanäle des Lab Farbraum sind statistisch unabhängig voneinander und können daher getrennt behandelt werden.}
+	\item[Statistische Unabhängigkeit]{Die Kanäle des Lab Farbraum sind statistisch unabhängig voneinander und können daher getrennt behandelt werden. }
+	\item[Grauwertbild enthalten]{Da der L-Kanal eines Bildes im Lab Farbraum nur die Helligkeitsinformationen beinhaltet steht hier im Gegensatz zum RGB Farbraum bereits eine Schwarz Weiß Version des Bildes zu Verfügung. Viele Untersuchungen über Gradienten, wie sie in dieser Arbeit vorgenommen werden, greifen nur auf ein Grauwertbild zurück. Durch die Kanäle a und b können auch Informationen über die Farbigkeit extrahiert werden.}
 	\item[Wahrnehmungsgetreu]{Der Abstand zweier Farben im Lab Farbraum korreliert linear mit dem Empfundenen Farbunterschied.}
+	\item[Geräteunabhängig]{Das tatsächliche Aussehen der Farben im RGB oder CMYK Farbraum ist vom Jeweiligen Darstellungsmedium (Drucker oder Monitor) abhängig.}
 \end{description}
+
+
+\begin{figure}[h]
+	\begin{center}
+		\input{../plots/statindipend.pgf}
+	\end{center}
+	\caption[Die Kanäle des Lab Farbraums sind statistisch Unabhängig voneinander]{\textbf{Die Kanäle des Lab Farbraums sind statistisch Unabhängig voneinander} \par \small Eine Stichprobe von Punkten des Bildes (Links) wird im RGB Raum (Rechts-Oben) und im Lab Raum (Rechts-Unten) dargestellt. Die Punkteverteilung entlang der Diagonalen deutet auf eine statistische Abhängigkeit der Dimensionen im RGB Farbraum hin.}
+\end{figure}
+
+
 
 \section{Scale Space}
 
