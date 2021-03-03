@@ -18,42 +18,49 @@ Die Resultate der \ac{HoG}s sind Vektoren welche zu einem Gesamtvektor zusammeng
 
 Ein Bild wird digital meist als eine Matrix von Pixeln dargestellt. Jeder Pixel steht dabei für eine Farbe oder einen Grauwert an einer durch die Matrix bestimmten Position des Bildes. Die Farbe jedes Pixels wird dabei über einen Punkt in einem Farbraum definiert.
 Eine einfache Lösung um ein Bild in Grauwerten bzw. Schwarz Weiß zu codieren ist es, jedem Pixel eine Zahl zwischen 0 und 100 zuzuordnen, wobei 0 für Schwarz, 100 für Weiß und alle dazwischen liegenden Zahlen für die entsprechenden Grauwerte stehen.
-Es wurden für unterschiedliche Einsatzzwecke Farbräume mit mehr Dimensionen entwickelt, wobei oft ein Mischverhältnis von Grundfarben codiert wird. So stellt der CMYK Farbraum das Mischverhältnis der namensgebenden Grundfarben Cyan, Magenta, Gelb (Yellow) und Schwarz (Key) dar, die von Druckern für die subtraktive Farbmischung verwendet werden.
+Es wurden für unterschiedliche Einsatzzwecke Farbräume mit mehr Dimensionen entwickelt, wobei oft ein Mischverhältnis von Grundfarben codiert wird.  
 Der RGB Farbraum codiert die Farben Rot, Grün und Blau die von Monitoren für die additive Farbmischung genutzt werden.
 
 \subsection{RGB Farbraum}
 
-Licht ist ein Bereich des Elektro-Magnetischen Wellenspektrums der von Menschen und Tieren wahrgenommen werden kann. Die Monochromatischen (einfarbigen) Farben des Regenbogens bestehen aus Licht jeweils einer bestimmten Wellenlänge zwischen 380 und 750 nm. Das menschliche Auge besitzt für das Farbsehen drei Arten von Rezeptoren, Zapfen genannt, welche jeweils für einen Frequenzbereich um eine der Grundfarben Blau, Grün und Rot empfindlich sind. Fällt zur gleichen Zeit grünes Licht mit einer Wellenlänge von ca. 500 nm und Rotes Licht mit 700 nm auf das Auge, entsteht der selbe Eindruck wie beim Wahrnehmen von gelbem Licht, mit einer Wellenlänge von 580 nm, da in beiden Fällen die Rezeptoren für Grün und Rot gleichstark gereizt werden. Auf diese Weise ist es Monitoren möglich, für jedes Pixel nur Leuchtmittel in den drei Grundfarben bereitzustellen und dennoch einen großen Bereich der vom Menschen wahrnehmbaren Farbeindrücke zu erzeugen. Aus diesem Grund werden Bilder für die digitale Speicherung und Übertragung oft mit Hilfe eines RGB Farbraums codiert. Jede Dimension dieses Raums steht dabei für eine der Grundfarben, sodass ein Punkt das Mischverhältnis und damit eine beliebige Farbe darstellt. Dabei stehen die Maximalwerte, je nachdem mit welcher Bittiefe codiert wird, für die reine Grundfarbe. Ein reines Rot wird bei einer Bittiefe von 8 bit durch den Vektor $\left(255, 0, 0\right)$ repräsentiert, während ein reines Gelb den Vektor $ \left(255, 255, 0\right) $ erhält. Unterschiedliche Helligkeiten werden durch das gleichmäßige anheben oder absenken aller Grundfarben erzeugt. So ist Schwarz durch den Koordinatenursprung $ \left(0, 0, 0\right) $ und Weiß durch die Maximalwerte $ \left(255, 255, 255\right) $ definiert.
+Licht ist ein Bereich des Elektro-Magnetischen Wellenspektrums der von Menschen und Tieren wahrgenommen werden kann. Die Monochromatischen (einfarbigen) Farben des Regenbogens bestehen aus Licht jeweils einer bestimmten Wellenlänge zwischen 380nm und 750nm. Das menschliche Auge besitzt für das Farbsehen drei Arten von Rezeptoren, Zapfen genannt, welche jeweils für einen Frequenzbereich um eine der Grundfarben Blau, Grün und Rot empfindlich sind. Fällt zur gleichen Zeit grünes Licht mit einer Wellenlänge von ca. 500nm und Rotes Licht mit 700nm auf das Auge, entsteht der selbe Eindruck wie beim Wahrnehmen von gelbem Licht, mit einer Wellenlänge von 580 nm, da in beiden Fällen die Rezeptoren für Grün und Rot gleichstark gereizt werden. Auf diese Weise ist es Monitoren möglich, für jedes Pixel nur Leuchtmittel in den drei Grundfarben bereitzustellen und dennoch einen großen Bereich der vom Menschen wahrnehmbaren Farbeindrücke zu erzeugen. Aus diesem Grund werden Bilder für die digitale Speicherung und Übertragung oft mit Hilfe eines RGB Farbraums codiert. Jede Dimension dieses Raums steht dabei für eine der Grundfarben, sodass ein Punkt das Mischverhältnis und damit eine beliebige Farbe darstellt. Dabei stehen die Maximalwerte, je nachdem mit welcher Bittiefe codiert wird, für die reine Grundfarbe. Ein reines Rot wird bei einer Bittiefe von 8 bit durch den Punkt $\left(255, 0, 0\right)$ repräsentiert, während ein reines Gelb den Punkt $ \left(255, 255, 0\right) $ erhält. Unterschiedliche Helligkeiten werden durch das gleichmäßige anheben oder absenken aller Grundfarben erzeugt. So ist Schwarz durch den Koordinatenursprung $ \left(0, 0, 0\right) $ und Weiß durch die Maximalwerte $ \left(255, 255, 255\right) $ definiert.
+
+Der RGB Farbraum eignet sich gut um Bilder auf einem Monitor darzustellen, für statistische Auswertungen ist er jedoch meist ungeeignet. Da Farb- und Helligkeitsinformationen über die selbem Kanäle kodiert werden stellt sich zwischen ihnen eine starke Korrelation ein. Der Wert einer Dimension ist also ein guter Indikator für die Werte der anderen. Ein dunkler Punkt weist meist in allen Dimensionen niedrige Werte auf, während ein heller Punkt große Werte über alle Dimensionen zeigt. Diese Abhängigkeit lässt keine statistischen Auswertungen der Kanäle, getrennt voneinander, zu.
+
+Darüber hinaus ergibt sich ein weiteres Problem in den wahrgenommenen Unterschieden zweier Farben. Da die Rezeptoren für das Farbsehen stark unterschiedliche Empfindleichkeitsprofiele aufweisen werden Unterschiede in den Kanälen des RGB Farbraums nicht gleich wahrgenommen. Der Kontrast von Cyan (Mischung von Blau und Grün) zu Grün wird stärker wahrgenommen, als der zwischen Grün und Gelb, obwohl sie im RGB Farbraum den selben Abstand zueinander haben.
+
+Aus diesen Gründen wird in den Untersuchungen dieser Arbeit auf den Lab Farbraum zurückgegriffen.
 
 
 \subsection{Lab Farbraum}
 
 
+Der Lab Farbraum basiert auf der Gegenfarbtheorie von Ewald Hering nach der die drei grundlegenden Gegenfarbpaare Blau-Gelb, Rot-Grün und Schwarz-Weiß das Menschliche Farbwahrnehmen bestimmen. Diese Theorie bildete eine Alternative zur Dreifarbentheorie, auf welcher der RGB Farbraum beruht, und findet seine Bestätigung in der Tatsache, dass die Rezeptoren der Netzhaut zwar empfindlich für die Grundfarben des RGB Raums sind, jedoch hinter der Netzhaut zu den Gegenfarben neuronal verschaltet werden.
 
-Die Bilder der JenAesthetics Datenbank liegen im JPEG Format vor, welches Farben im RGB Raum codiert. Zu beginn der Pipeline werden die Bilder in den Lab Farbraum überführt.
+Auf Basis des Gegenfarbmodells wird der Lab Farbraum durch drei Dimensionen aufgespannt welche den Kontrast zwischen Schwarz und Weis im L-Kanal sowie die Gegenfarbpaare Grün-Rot im a- und Blau-Gelb im b-Kanal abbilden. Der L-Kanal kann  Werte von 0 (Schwarz) bis 100 (Weiß) annehmen, während die Kanäle a und b Werte von -128 bis 127 annehmen. An den Enden der Kanäle a und b werden die jeweiligen Farben am intensivsten dargestellt, während sie in der Mitte bei 0 einen unbunten Farbton annehmen.
 
-
-\theoremstyle{definition}
-\begin{definition}[Lab Farbraum]
-	Der Lab Farbraum bildet Farben in drei Dimensionen ab: Die Luminanz Achse (L) nimmt Werte von 0 bis 100 an und stellt die Helligkeit einer Farbe dar, während die Achsen a und b den Farbanteil von Rot zu Grün bzw. von Blau zu Gelb repräsentieren und Werte von -128 bis 127 annehmen.
-\end{definition}
-
-Das Arbeiten in diesem Farbraum bietet sich aus mehreren Gründen an:
+Diese Darstellung bietet einige Vorteile:  
 
 \begin{description}
-	\item[Statistische Unabhängigkeit]{Die Kanäle des Lab Farbraum sind statistisch unabhängig voneinander und können daher getrennt behandelt werden. }
-	\item[Grauwertbild enthalten]{Da der L-Kanal eines Bildes im Lab Farbraum nur die Helligkeitsinformationen beinhaltet steht hier im Gegensatz zum RGB Farbraum bereits eine Schwarz Weiß Version des Bildes zu Verfügung. Viele Untersuchungen über Gradienten, wie sie in dieser Arbeit vorgenommen werden, greifen nur auf ein Grauwertbild zurück. Durch die Kanäle a und b können auch Informationen über die Farbigkeit extrahiert werden.}
-	\item[Wahrnehmungsgetreu]{Der Abstand zweier Farben im Lab Farbraum korreliert linear mit dem Empfundenen Farbunterschied.}
-	\item[Geräteunabhängig]{Das tatsächliche Aussehen der Farben im RGB oder CMYK Farbraum ist vom Jeweiligen Darstellungsmedium (Drucker oder Monitor) abhängig.}
+	\item[Statistische Unabhängigkeit]{
+		Im Gegensatz zum RGB Modell sind die Kanäle des Lab Farbraum statistisch unabhängig voneinander und können daher getrennt behandelt werden. 
+	}
+	\item[Grauwertbild enthalten]{
+		Da der L-Kanal eines Bildes im Lab Farbraum nur die Helligkeitsinformationen beinhaltet steht hier im Gegensatz zum RGB Farbraum bereits eine Schwarz Weiß Version des Bildes zur Verfügung. Farbigkeit und Helligkeit können also getrennt voneinander behandelt werden.
+	}
+	\item[Wahrnehmungsgetreu]{
+		Der euklidische Abstand zweier Farben im Lab Farbraum korreliert linear mit dem Empfundenen Farbunterschied. Somit sind statistische Auswertungen näher an der Wahrnehmung des Menschen. 
+	}
 \end{description}
 
+Aus diesen Gründen wird für die Analyse in dieser Arbeit der Lab Farbraum herangezogen. 
 
-\begin{figure}[h]
-	\begin{center}
-		\input{../plots/statindipend.pgf}
-	\end{center}
-	\caption[Die Kanäle des Lab Farbraums sind statistisch Unabhängig voneinander]{\textbf{Die Kanäle des Lab Farbraums sind statistisch Unabhängig voneinander} \par \small Eine Stichprobe von Punkten des Bildes (Links) wird im RGB Raum (Rechts-Oben) und im Lab Raum (Rechts-Unten) dargestellt. Die Punkteverteilung entlang der Diagonalen deutet auf eine statistische Abhängigkeit der Dimensionen im RGB Farbraum hin.}
-\end{figure}
+%\begin{figure}[h]
+%	\begin{center}
+%		\input{../plots/statindipend.pgf}
+%	\end{center}
+%	\caption[Die Kanäle des Lab Farbraums sind statistisch Unabhängig voneinander]{\textbf{Die Kanäle des Lab Farbraums sind statistisch Unabhängig voneinander} \par \small Eine Stichprobe von Punkten des Bildes (Links) wird im RGB Raum (Rechts-Oben) und im Lab Raum (Rechts-Unten) dargestellt. Die Punkteverteilung entlang der Diagonalen deutet auf eine statistische Abhängigkeit der Dimensionen im RGB Farbraum hin.}
+%\end{figure}
 
 
 
